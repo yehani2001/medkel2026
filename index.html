@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MedKel 2026 Profile Frame</title>
+  <meta name="description" content="Add the official MedKel 2026 profile frame to your profile picture." />
+  <style>
+    :root {
+      --bg: #f5f8fb;
+      --card: #ffffff;
+      --text: #142536;
+      --muted: #5e6d7a;
+      --accent: #0b5a70;
+      --accent2: #73101a;
+      --border: #d8e3ea;
+      --shadow: 0 18px 45px rgba(12, 35, 53, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #ffffff 0%, var(--bg) 52%, #eaf1f5 100%);
+      color: var(--text);
+    }
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #e7f3f7;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.03em;
+    }
+    .sub {
+      margin: 10px auto 0;
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 22px;
+      align-items: start;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+    .canvasBox {
+      display: grid;
+      place-items: center;
+    }
+    canvas {
+      width: min(100%, 520px);
+      aspect-ratio: 1 / 1;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      touch-action: none;
+      user-select: none;
+    }
+    .controls h2, .caption h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+    }
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 16px 0 8px;
+    }
+    input[type="file"] {
+      width: 100%;
+      border: 1px dashed #9bb1bd;
+      background: #f7fbfd;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    button, .buttonLink {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 13px 16px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+    }
+    .primary { background: var(--accent2); color: white; }
+    .secondary { background: #e7f3f7; color: var(--accent); }
+    .ghost { background: #eef3f6; color: var(--text); }
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: 10px;
+    }
+    .caption {
+      margin-top: 22px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 170px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      font: inherit;
+      resize: vertical;
+      color: var(--text);
+      background: #fbfdff;
+    }
+    .steps {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    footer {
+      margin-top: 22px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
+      .wrap { width: min(100% - 20px, 1120px); padding-top: 18px; }
+      .card { padding: 16px; border-radius: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="badge">Official Profile Picture Frame Launch</div>
+      <h1>Support MedKel 2026</h1>
+      <p class="sub">Upload your photo, adjust it inside the frame, download the final image, and set it as your temporary Facebook profile picture.</p>
+    </header>
+
+    <section class="grid">
+      <div class="card canvasBox">
+        <canvas id="canvas" width="1080" height="1080" aria-label="Profile frame preview"></canvas>
+      </div>
+
+      <div class="card controls">
+        <h2>Create your framed profile picture</h2>
+        <label for="photo">1. Upload your photo</label>
+        <input id="photo" type="file" accept="image/*" />
+        <p class="hint">Your photo is processed only inside your browser. It is not uploaded to a server.</p>
+
+        <label for="zoom">2. Zoom</label>
+        <input id="zoom" type="range" min="0.6" max="3" value="1" step="0.01" />
+        <p class="hint">Drag the photo on the preview to position it correctly.</p>
+
+        <div class="row">
+          <button class="secondary" id="reset" type="button">Reset position</button>
+          <button class="primary" id="download" type="button">Download image</button>
+        </div>
+        <div class="row">
+          <button class="ghost" id="share" type="button">Share image</button>
+          <a class="buttonLink secondary" href="https://www.facebook.com/me" target="_blank" rel="noopener">Open Facebook</a>
+        </div>
+
+        <ol class="steps">
+          <li>Download the image.</li>
+          <li>Open Facebook and change your profile picture.</li>
+          <li>Select the downloaded MedKel 2026 image.</li>
+          <li>Choose temporary profile picture duration if Facebook offers it.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="card caption">
+      <h2>Caption for sharing</h2>
+      <textarea id="caption" readonly>Support MedKel 2026: Official Profile Frame Launch
+
+In anticipation of the MedKel 2026 Exhibition, we are pleased to release the official temporary profile picture frame for our students, faculty members, and well-wishers.
+
+We invite the entire MedKel community to adopt this frame and join us in promoting this landmark event in our faculty's history.
+
+#MedKel2026 #MedKelKelaniya #FOMKelaniya #MedicineUoK</textarea>
+      <div class="row">
+        <button class="secondary" id="copyCaption" type="button">Copy caption</button>
+        <button class="ghost" id="copyLink" type="button">Copy this page link</button>
+      </div>
+    </section>
+
+    <footer>MedKel 2026 • Faculty of Medicine, University of Kelaniya</footer>
+  </main>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const photoInput = document.getElementById('photo');
+    const zoomInput = document.getElementById('zoom');
+    const downloadButton = document.getElementById('download');
+    const resetButton = document.getElementById('reset');
+    const shareButton = document.getElementById('share');
+    const copyCaptionButton = document.getElementById('copyCaption');
+    const copyLinkButton = document.getElementById('copyLink');
+    const caption = document.getElementById('caption');
+
+    const frame = new Image();
+    frame.src = 'frame.png';
+
+    let userImg = null;
+    let scale = 1;
+    let offsetX = 0;
+    let offsetY = 0;
+    let dragging = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    function coverSize(img) {
+      const c = canvas.width;
+      const base = Math.max(c / img.width, c / img.height);
+      return { w: img.width * base * scale, h: img.height * base * scale };
+    }
+
+    function draw() {
+      const c = canvas.width;
+      ctx.clearRect(0, 0, c, c);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, c, c);
+
+      if (userImg) {
+        const s = coverSize(userImg);
+        const x = (c - s.w) / 2 + offsetX;
+        const y = (c - s.h) / 2 + offsetY;
+        ctx.drawImage(userImg, x, y, s.w, s.h);
+      } else {
+        ctx.fillStyle = '#eff5f8';
+        ctx.beginPath();
+        ctx.arc(c / 2, c / 2, c * 0.38, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#5e6d7a';
+        ctx.textAlign = 'center';
+        ctx.font = '700 44px system-ui, sans-serif';
+        ctx.fillText('Upload your photo', c / 2, c / 2);
+        ctx.font = '400 28px system-ui, sans-serif';
+        ctx.fillText('Then drag and zoom', c / 2, c / 2 + 48);
+      }
+
+      if (frame.complete) {
+        ctx.drawImage(frame, 0, 0, c, c);
+      }
+    }
+
+    function loadPhoto(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          userImg = img;
+          scale = 1;
+          zoomInput.value = '1';
+          offsetX = 0;
+          offsetY = 0;
+          draw();
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function getPoint(event) {
+      const rect = canvas.getBoundingClientRect();
+      const touch = event.touches ? event.touches[0] : event;
+      const x = (touch.clientX - rect.left) * (canvas.width / rect.width);
+      const y = (touch.clientY - rect.top) * (canvas.height / rect.height);
+      return { x, y };
+    }
+
+    photoInput.addEventListener('change', e => loadPhoto(e.target.files[0]));
+    zoomInput.addEventListener('input', e => { scale = Number(e.target.value); draw(); });
+    frame.onload = draw;
+
+    canvas.addEventListener('pointerdown', e => {
+      if (!userImg) return;
+      dragging = true;
+      canvas.setPointerCapture(e.pointerId);
+      const p = getPoint(e);
+      lastX = p.x;
+      lastY = p.y;
+    });
+
+    canvas.addEventListener('pointermove', e => {
+      if (!dragging || !userImg) return;
+      const p = getPoint(e);
+      offsetX += p.x - lastX;
+      offsetY += p.y - lastY;
+      lastX = p.x;
+      lastY = p.y;
+      draw();
+    });
+
+    canvas.addEventListener('pointerup', () => dragging = false);
+    canvas.addEventListener('pointercancel', () => dragging = false);
+
+    resetButton.addEventListener('click', () => {
+      scale = 1;
+      offsetX = 0;
+      offsetY = 0;
+      zoomInput.value = '1';
+      draw();
+    });
+
+    function getBlob() {
+      return new Promise(resolve => canvas.toBlob(resolve, 'image/png', 0.96));
+    }
+
+    downloadButton.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'MedKel-2026-profile-frame.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+
+    shareButton.addEventListener('click', async () => {
+      try {
+        const blob = await getBlob();
+        const file = new File([blob], 'MedKel-2026-profile-frame.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ title: 'MedKel 2026 Profile Frame', text: caption.value, files: [file] });
+        } else if (navigator.share) {
+          await navigator.share({ title: 'MedKel 2026 Profile Frame', text: caption.value, url: window.location.href });
+        } else {
+          alert('Sharing is not supported on this browser. Please download the image instead.');
+        }
+      } catch (err) {
+        if (err.name !== 'AbortError') alert('Sharing failed. Please download the image instead.');
+      }
+    });
+
+    copyCaptionButton.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(caption.value);
+      copyCaptionButton.textContent = 'Caption copied';
+      setTimeout(() => copyCaptionButton.textContent = 'Copy caption', 1600);
+    });
+
+    copyLinkButton.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(window.location.href);
+      copyLinkButton.textContent = 'Link copied';
+      setTimeout(() => copyLinkButton.textContent = 'Copy this page link', 1600);
+    });
+
+    draw();
+  </script>
+</body>
+</html>
